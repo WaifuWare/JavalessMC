@@ -1,7 +1,14 @@
+#include "events/eventmanager.hpp"
+#include "events/impl/pluginLoadedEvent.hpp"
+#include <cstdlib>
+#include <cstring>
 #include <dlfcn.h> // Dynamic loading functions
 #include <filesystem>
 #include <iostream>
 #include <string>
+
+#include "events/eventmanager.hpp"
+#include "events/impl/pluginLoadedEvent.hpp"
 
 typedef int (*InitFunction)();
 
@@ -23,7 +30,6 @@ int loadPlugin(const char *name) {
 
   int result = initFunc();
   dlclose(libHandle);
-
   return result;
 }
 
@@ -36,7 +42,10 @@ void initLoader() {
       std::cerr << "Failed to load the plugin " << entry.path().filename()
                 << std::endl;
     } else {
-      std::cout << "Loaded the plugin " << entry.path().filename() << std::endl;
+      char *_name = (char *)malloc(strlen(path.c_str()) + 1);
+      strcpy(_name, path.c_str());
+      EventManager::getInstance().fire(new LoadedPluginEvent(_name));
+      free(_name);
     }
   }
 }

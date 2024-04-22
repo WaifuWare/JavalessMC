@@ -1,7 +1,7 @@
 # Compiler
 CC = g++
 # Compiler flags
-CFLAGS = -Wall -Werror -ldl
+CFLAGS = -Wall -ldl
 # Source directory
 SRC_DIR = src
 # Build directory
