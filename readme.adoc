@@ -1,0 +1,19 @@
+= JavalessMC
+
+JavalessMC is a minecraft headless instance that work in C++. Its goal is to provide a fast and memory efficient framework to build Minecraft bots.
+
+*THIS TOOL IS A WORK IN PROGRESS AND MAY NOT WORK AS EXPECTED. PLEASE BE PATIENT UNTIL WE MAKE A WORKING SOLUTION !*
+
+== building
+
+run the build.sh batch file.
+
+== Install plugins
+
+depending on your OS, download either a .dll or .so of the plugin, and put it in the plugins folder.
+
+If this folder does not exist, create it yourself. JavalessMC alone is useless, as it just create a player that do nothing.
+
+== Create plugins
+
+In the future, an api and an exemple will be published, with documentation. For now, please wait until we get to this part of developpement.
