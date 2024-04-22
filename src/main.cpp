@@ -6,12 +6,12 @@
 #include <ostream>
 
 void onTick(Event *event) {
-  if (UpdateEvent *e = dynamic_cast<UpdateEvent *>(event)) {
+  if (auto *e = dynamic_cast<UpdateEvent *>(event)) {
   }
 }
 
 void onPluginLoad(Event *event) {
-  if (LoadedPluginEvent *e = dynamic_cast<LoadedPluginEvent *>(event)) {
+  if (auto *e = dynamic_cast<LoadedPluginEvent *>(event)) {
     std::cout << "loaded plugin " << e->getName() << std::endl;
   }
 }

@@ -2,10 +2,13 @@
 #include "events/impl/pluginLoadedEvent.hpp"
 #include <cstdlib>
 #include <cstring>
-#include <dlfcn.h> // Dynamic loading functions
 #include <filesystem>
 #include <iostream>
 #include <string>
+
+#ifdef __linux__
+#include <dlfcn.h> // Dynamic loading functions
+#endif
 
 #include "events/eventmanager.hpp"
 #include "events/impl/pluginLoadedEvent.hpp"
@@ -14,6 +17,7 @@ typedef int (*InitFunction)();
 
 int loadPlugin(const char *name) {
   // Open the dynamic library
+#ifdef __linux__
   void *libHandle = dlopen(name, RTLD_LAZY);
   if (!libHandle) {
     std::cerr << "Failed to open library: " << dlerror() << std::endl;
@@ -31,6 +35,8 @@ int loadPlugin(const char *name) {
   int result = initFunc();
   dlclose(libHandle);
   return result;
+#endif
+  return 0;
 }
 
 void initLoader() {
