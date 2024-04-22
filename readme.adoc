@@ -20,6 +20,13 @@ In the future, an api and an exemple will be published, with documentation. For 
 
 == Credits : 
 
-SomeBoringNerd (Morgane) : main developper, plugin loader, event system
+[cols="~,~"]
+|===
 
-TaxMachine : main developper, all of the networking
+| https://github.com/SomeBoringNerd[SomeBoringNerd (Morgane)]
+| main developper, plugin loader, event system
+
+| https://github.com/TaxMachine[TaxMachine]
+| main developper, all of the networking
+
+|===
