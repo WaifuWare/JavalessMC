@@ -17,3 +17,9 @@ If this folder does not exist, create it yourself. JavalessMC alone is useless, 
 == Create plugins
 
 In the future, an api and an exemple will be published, with documentation. For now, please wait until we get to this part of developpement.
+
+== Credits : 
+
+SomeBoringNerd (Morgane) : main developper, plugin loader
+
+TaxMachine : main developper, all of the networking
