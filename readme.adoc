@@ -20,6 +20,6 @@ In the future, an api and an exemple will be published, with documentation. For 
 
 == Credits : 
 
-SomeBoringNerd (Morgane) : main developper, plugin loader
+SomeBoringNerd (Morgane) : main developper, plugin loader, event system
 
 TaxMachine : main developper, all of the networking
