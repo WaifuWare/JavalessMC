@@ -9,11 +9,6 @@
 #include "../../../utils/uuid.h"
 #include "../../../utils/Exceptions.hpp"
 
-enum HandshakeNextState {
-    Status = 1,
-    Login
-};
-
 char* Handshake(int protocol_version, const char* ip, uint16_t port, HandshakeNextState next_state) {
     MinecraftPacket packet{};
     packet.write_varint(0x00);

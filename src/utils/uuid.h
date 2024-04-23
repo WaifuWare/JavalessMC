@@ -397,7 +397,7 @@ namespace uuids
          std::copy(std::cbegin(arr), std::cend(arr), std::begin(data));
       }
 
-      constexpr uuid(std::array<value_type, 16> const & arr) noexcept : data{arr} {}
+      constexpr explicit uuid(std::array<value_type, 16> const & arr) noexcept : data{arr} {}
 
       explicit uuid(span<value_type, 16> bytes)
       {
@@ -425,23 +425,25 @@ namespace uuids
 
       [[nodiscard]] constexpr uuid_version version() const noexcept
       {
-         if ((data[6] & 0xF0) == 0x10)
-            return uuid_version::time_based;
-         else if ((data[6] & 0xF0) == 0x20)
-            return uuid_version::dce_security;
-         else if ((data[6] & 0xF0) == 0x30)
-            return uuid_version::name_based_md5;
-         else if ((data[6] & 0xF0) == 0x40)
-            return uuid_version::random_number_based;
-         else if ((data[6] & 0xF0) == 0x50)
-            return uuid_version::name_based_sha1;
-         else
-            return uuid_version::none;
+          switch ((data[6] & 0xF0) >> 4) {
+              case 0x10:
+                  return uuid_version::time_based;
+              case 0x20:
+                  return uuid_version::dce_security;
+              case 0x30:
+                  return uuid_version::name_based_md5;
+              case 0x40:
+                  return uuid_version::random_number_based;
+              case 0x50:
+                  return uuid_version::name_based_sha1;
+              default:
+                  return uuid_version::none;
+          }
       }
 
       [[nodiscard]] constexpr bool is_nil() const noexcept
       {
-         for (size_t i = 0; i < data.size(); ++i) if (data[i] != 0) return false;
+         for (unsigned char i : data) if (i != 0) return false;
          return true;
       }
 

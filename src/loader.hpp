@@ -8,7 +8,7 @@
 #include <iostream>
 #include <string>
 
-#ifdef WIN32
+#ifdef _WIN32
 #include "utils/win32stuff.hpp"
 #include <windows.h>
 #else
@@ -23,16 +23,15 @@ namespace fs = std::filesystem;
 typedef int (*InitFunction)();
 
 int loadPlugin(const char *name) {
-#ifdef WIN32
+#ifdef _WIN32
   HINSTANCE hProc = LoadLibrary(name);
   if (!hProc) {
-    std::cerr << "Failed to open library: " << GetLastErrorString()
-              << std::endl;
+    std::cerr << "Failed to open library: " << GetLastErrorString(GetLastError()) << std::endl;
     return 1;
   }
   auto initFunc = (InitFunction)GetProcAddress(hProc, "init");
   if (!initFunc) {
-    std::cerr << "Failed to find symbol: " << GetLastErrorString() << std::endl;
+    std::cerr << "Failed to find symbol: " << GetLastErrorString(GetLastError()) << std::endl;
     FreeLibrary(hProc);
     return 1;
   }

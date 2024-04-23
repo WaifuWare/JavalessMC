@@ -10,9 +10,7 @@
 #include <vector>
 
 #include "../utils/uuid.h"
-
-#define SEGMENT_BITS 0x7F
-#define SEGMENT_CONTINUATION_BIT 0x80
+#include "structs.hpp"
 
 class MinecraftPacket {
 public:

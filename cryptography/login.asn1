@@ -1,0 +1,16 @@
+PublicKeySubject DEFINITIONS ::= BEGIN
+
+SubjectPublicKeyInfo ::= SEQUENCE {
+  algorithm SEQUENCE {
+    algorithm         OBJECT IDENTIFIER,
+    parameters        ANY OPTIONAL
+  },
+  subjectPublicKey  BIT STRING
+}
+
+SubjectPublicKey ::= SEQUENCE {
+  modulus           INTEGER,
+  publicExponent    INTEGER
+}
+
+END

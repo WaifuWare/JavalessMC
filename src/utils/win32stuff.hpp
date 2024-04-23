@@ -5,7 +5,7 @@
 #ifndef JAVALESSMC_WIN32STUFF_HPP
 #define JAVALESSMC_WIN32STUFF_HPP
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <string>
 #include <windows.h>
 
@@ -13,8 +13,7 @@
  * @brief Gets the last Win32 error as a string instead of a DWORD
  * @note Taken from https://stackoverflow.com/questions/1387064/how-to-get-the-error-message-from-the-error-code-returned-by-getlasterror
  * */
-std::string GetLastErrorString() {
-    DWORD msgId = GetLastError();
+std::string GetLastErrorString(DWORD msgId) {
     if (msgId == 0) {
         return "";
     }
