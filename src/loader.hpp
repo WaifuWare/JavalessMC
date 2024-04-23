@@ -4,12 +4,13 @@
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <string>
 
 #ifdef WIN32
-#include <windows.h>
 #include "utils/win32stuff.hpp"
+#include <windows.h>
 #else
 #include <dlfcn.h>
 #endif
@@ -17,46 +18,56 @@
 #include "events/eventmanager.hpp"
 #include "events/impl/pluginLoadedEvent.hpp"
 
+namespace fs = std::filesystem;
+
 typedef int (*InitFunction)();
 
 int loadPlugin(const char *name) {
 #ifdef WIN32
-    HINSTANCE hProc = LoadLibrary(name);
-    if (!hProc) {
-        std::cerr << "Failed to open library: " << GetLastErrorString() << std::endl;
-        return 1;
-    }
-    auto initFunc = (InitFunction) GetProcAddress(hProc, "init");
-    if (!initFunc) {
-        std::cerr << "Failed to find symbol: " << GetLastErrorString() << std::endl;
-        FreeLibrary(hProc);
-        return 1;
-    }
-    int result = initFunc();
+  HINSTANCE hProc = LoadLibrary(name);
+  if (!hProc) {
+    std::cerr << "Failed to open library: " << GetLastErrorString()
+              << std::endl;
+    return 1;
+  }
+  auto initFunc = (InitFunction)GetProcAddress(hProc, "init");
+  if (!initFunc) {
+    std::cerr << "Failed to find symbol: " << GetLastErrorString() << std::endl;
     FreeLibrary(hProc);
-    return result;
+    return 1;
+  }
+  int result = initFunc();
+  FreeLibrary(hProc);
+  return result;
 #else
-    void *libHandle = dlopen(name, RTLD_LAZY);
-    if (!libHandle) {
-        std::cerr << "Failed to open library: " << dlerror() << std::endl;
-        return 1;
-    }
+  void *libHandle = dlopen(name, RTLD_LAZY);
+  if (!libHandle) {
+    std::cerr << "Failed to open library: " << dlerror() << std::endl;
+    return 1;
+  }
 
-    // Get a pointer to the init function
-    InitFunction initFunc = (InitFunction)dlsym(libHandle, "_Z4initv");
-    if (!initFunc) {
-        std::cerr << "Failed to find symbol: " << dlerror() << std::endl;
-        dlclose(libHandle);
-        return 1;
-    }
-
-    int result = initFunc();
+  // Get a pointer to the init function
+  InitFunction initFunc = (InitFunction)dlsym(libHandle, "_Z4initv");
+  if (!initFunc) {
+    std::cerr << "Failed to find symbol: " << dlerror() << std::endl;
     dlclose(libHandle);
-    return result;
+    return 1;
+  }
+
+  int result = initFunc();
+  dlclose(libHandle);
+  return result;
 #endif
 }
 
 void initLoader() {
+
+  if (!fs::exists("./plugins")) {
+    std::cout << "folder \"plugins\" does not exist, please create it"
+              << std::endl;
+    return;
+  }
+
   for (const auto &entry : std::filesystem::directory_iterator("./plugins")) {
     std::string path = "./plugins/";
     path += entry.path().filename().string();
@@ -73,4 +84,4 @@ void initLoader() {
   }
 }
 
-#endif //JAVALESSMC_LOADER_HPP
+#endif // JAVALESSMC_LOADER_HPP
