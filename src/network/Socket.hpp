@@ -14,6 +14,7 @@
 #endif
 
 #include "../utils/uuid.h"
+#include "structs.hpp"
 
 class Socket {
 public:
@@ -31,6 +32,7 @@ public:
     [[nodiscard]] uuids::uuid recv_UUID() const;
     [[nodiscard]] uint16_t recv_ushort() const;
     [[nodiscard]] uint8_t recv_byte() const;
+    [[nodiscard]] Position recv_position() const;
 
 private:
     char* err_buffer;

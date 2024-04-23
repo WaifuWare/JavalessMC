@@ -160,3 +160,15 @@ void MinecraftPacket::write_identifier(const std::string &value) {
     }
     write_string(value);
 }
+
+void MinecraftPacket::write_position(Position pos) {
+    int64_t result = ((pos.x & 0x3FFFFFF) << 38) | ((pos.z & 0x3FFFFFF) << 12) | (pos.y & 0xFFF);
+    write_long(result);
+}
+
+void MinecraftPacket::write_array(char **values) {
+    write_varint(std::count(values, values + 1, nullptr));
+    for (int i = 0; values[i] != nullptr; i++) {
+        write_string(values[i]);
+    }
+}

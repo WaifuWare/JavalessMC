@@ -16,6 +16,12 @@
 #define RIGHT_PANTS_LEG_ENABLED 0x20
 #define HAT_ENABLED 0x40
 
+struct Position {
+    int64_t x;
+    int64_t y;
+    int64_t z;
+};
+
 enum HandshakeNextState {
     Status = 1,
     Login
@@ -41,6 +47,13 @@ enum ResourcePackResultID {
     INVALID_URL,
     FAILED_TO_RELOAD,
     DISCARDED
+};
+
+enum Difficulty {
+    PEACEFUL,
+    EASY,
+    NORMAL,
+    HARD
 };
 
 struct DisplayedSkinPart {

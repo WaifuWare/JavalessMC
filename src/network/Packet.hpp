@@ -27,6 +27,8 @@ public:
     void write_bool(bool value);
     void write_buffer(const char* buffer, size_t len);
     void write_UUID(uuids::uuid UUID);
+    void write_position(Position pos);
+    void write_array(char** values);
     [[nodiscard]] char* getBuffer();
     [[nodiscard]] std::fstream getBufferStream();
     [[nodiscard]] size_t size() const;

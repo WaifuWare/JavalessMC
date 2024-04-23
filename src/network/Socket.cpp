@@ -193,3 +193,13 @@ uint16_t Socket::recv_ushort() const {
     this->receive(reinterpret_cast<char*>(&value), 2);
     return value;
 }
+
+Position Socket::recv_position() const {
+    int64_t val = recv_varlong();
+    Position pos{};
+    pos.x = val >> 38;
+    pos.y = val << 52 >> 52;
+    pos.z = val << 26 >> 38;
+    return pos;
+}
+
