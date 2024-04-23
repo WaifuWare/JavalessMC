@@ -6,7 +6,7 @@ JavalessMC is a minecraft headless instance that work in C++. Its goal is to pro
 
 == building
 
-run the build.sh batch file.
+run the build.sh batch file in the scripts folder.
 
 == Install plugins
 
