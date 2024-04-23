@@ -107,7 +107,7 @@ char* AcknowledgeFinishConfiguration() {
     return packet.getBuffer();
 }
 
-char* ServerboundKeepAlive(long keep_alive_id) {
+char* ServerBoundKeepAlive(long keep_alive_id) {
     MinecraftPacket packet{};
     packet.write_varint(0x03);
     packet.write_long(keep_alive_id);

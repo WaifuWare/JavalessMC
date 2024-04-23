@@ -1,13 +1,17 @@
-#include "events/eventmanager.hpp"
-#include "events/impl/pluginLoadedEvent.hpp"
+#ifndef JAVALESSMC_LOADER_HPP
+#define JAVALESSMC_LOADER_HPP
+
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
 #include <iostream>
 #include <string>
 
-#ifdef __linux__
-#include <dlfcn.h> // Dynamic loading functions
+#ifdef WIN32
+#include <windows.h>
+#include "utils/win32stuff.hpp"
+#else
+#include <dlfcn.h>
 #endif
 
 #include "events/eventmanager.hpp"
@@ -16,33 +20,46 @@
 typedef int (*InitFunction)();
 
 int loadPlugin(const char *name) {
-  // Open the dynamic library
-#ifdef __linux__
-  void *libHandle = dlopen(name, RTLD_LAZY);
-  if (!libHandle) {
-    std::cerr << "Failed to open library: " << dlerror() << std::endl;
-    return 1;
-  }
+#ifdef WIN32
+    HINSTANCE hProc = LoadLibrary(name);
+    if (!hProc) {
+        std::cerr << "Failed to open library: " << GetLastErrorString() << std::endl;
+        return 1;
+    }
+    auto initFunc = (InitFunction) GetProcAddress(hProc, "init");
+    if (!initFunc) {
+        std::cerr << "Failed to find symbol: " << GetLastErrorString() << std::endl;
+        FreeLibrary(hProc);
+        return 1;
+    }
+    int result = initFunc();
+    FreeLibrary(hProc);
+    return result;
+#else
+    void *libHandle = dlopen(name, RTLD_LAZY);
+    if (!libHandle) {
+        std::cerr << "Failed to open library: " << dlerror() << std::endl;
+        return 1;
+    }
 
-  // Get a pointer to the init function
-  InitFunction initFunc = (InitFunction)dlsym(libHandle, "_Z4initv");
-  if (!initFunc) {
-    std::cerr << "Failed to find symbol: " << dlerror() << std::endl;
+    // Get a pointer to the init function
+    InitFunction initFunc = (InitFunction)dlsym(libHandle, "_Z4initv");
+    if (!initFunc) {
+        std::cerr << "Failed to find symbol: " << dlerror() << std::endl;
+        dlclose(libHandle);
+        return 1;
+    }
+
+    int result = initFunc();
     dlclose(libHandle);
-    return 1;
-  }
-
-  int result = initFunc();
-  dlclose(libHandle);
-  return result;
+    return result;
 #endif
-  return 0;
 }
 
 void initLoader() {
   for (const auto &entry : std::filesystem::directory_iterator("./plugins")) {
     std::string path = "./plugins/";
-    path += entry.path().filename();
+    path += entry.path().filename().string();
 
     if (loadPlugin(path.c_str()) != 0) {
       std::cerr << "Failed to load the plugin " << entry.path().filename()
@@ -55,3 +72,5 @@ void initLoader() {
     }
   }
 }
+
+#endif //JAVALESSMC_LOADER_HPP
