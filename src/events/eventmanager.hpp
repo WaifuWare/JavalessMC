@@ -4,7 +4,7 @@
 
 class Event {
 public:
-  virtual ~Event() {}
+  virtual ~Event() = default;
 };
 
 using EventHandler = std::function<void(Event *)>;
@@ -16,7 +16,7 @@ public:
     return instance;
   }
 
-  void registerEventManager(EventHandler handler) {
+  void registerEventManager(const EventHandler& handler) {
     handlers.push_back(handler);
   }
 

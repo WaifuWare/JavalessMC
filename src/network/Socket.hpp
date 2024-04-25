@@ -6,6 +6,8 @@
 #define JAVALESSMC_SOCKET_HPP
 
 #include <string>
+#include <atomic>
+#include <vector>
 
 #ifdef _WIN32
 #include <winsock2.h>
@@ -25,6 +27,9 @@ public:
     void send(const char* buffer, size_t len) const;
     size_t receive(char* buffer, size_t len) const;
 
+    [[nodiscard]] std::string get_ip() const;
+    [[nodiscard]] int get_port() const;
+
     [[nodiscard]] int32_t recv_varint() const;
     [[nodiscard]] int64_t recv_varlong() const;
     [[nodiscard]] char* recv_string(int length) const;
@@ -35,6 +40,8 @@ public:
     [[nodiscard]] Position recv_position() const;
 
 private:
+    void updatePacketQueue();
+
     char* err_buffer;
 #ifdef _WIN32
     SOCKET socket;
@@ -44,6 +51,7 @@ private:
     int m_port{};
     std::string m_ip;
     int timeout = 5000;
+    std::vector<char*> m_packet_queue;
 };
 
 #endif //JAVALESSMC_SOCKET_HPP

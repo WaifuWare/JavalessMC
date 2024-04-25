@@ -12,6 +12,7 @@
 #include "../utils/uuid.h"
 #include "structs.hpp"
 
+
 class MinecraftPacket {
 public:
     MinecraftPacket();

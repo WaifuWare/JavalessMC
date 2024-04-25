@@ -13,7 +13,7 @@
  * @brief Gets the last Win32 error as a string instead of a DWORD
  * @note Taken from https://stackoverflow.com/questions/1387064/how-to-get-the-error-message-from-the-error-code-returned-by-getlasterror
  * */
-std::string GetLastErrorString(DWORD msgId) {
+static std::string GetLastErrorString(DWORD msgId) {
     if (msgId == 0) {
         return "";
     }

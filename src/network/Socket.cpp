@@ -4,7 +4,6 @@
 
 #include "Socket.hpp"
 
-#include <iostream>
 #include <cstring>
 
 #include "../utils/Exceptions.hpp"
@@ -20,7 +19,7 @@
     #include <cerrno>
 #endif
 
-Socket::Socket() {
+Socket::Socket() : m_packet_queue(0) {
     this->err_buffer = new char[256];
 #ifdef WIN32
     WSADATA wsaData;
@@ -203,3 +202,14 @@ Position Socket::recv_position() const {
     return pos;
 }
 
+std::string Socket::get_ip() const {
+    return this->m_ip;
+}
+
+int Socket::get_port() const {
+    return this->m_port;
+}
+
+void Socket::updatePacketQueue() {
+    this->m_packet_queue.load();
+}
