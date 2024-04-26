@@ -18,6 +18,7 @@ class ProcessCommandEvent : public Event {
         for (int i = 0; args[i] != nullptr; ++i) {
             free(args[i]);
         }
+        delete [] args;
     }
 
     char *getCommand() {
