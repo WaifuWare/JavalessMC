@@ -25,5 +25,4 @@ std::string GetLastErrorString(DWORD msgId) {
     return message;
 }
 #endif
-
 #endif //JAVALESSMC_WIN32STUFF_HPP

@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.27)
 project(JavalessMC)
 
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/**)
 file(GLOB_RECURSE ASN1C_SOURCES ${CMAKE_SOURCE_DIR}/cryptography/*.c)
