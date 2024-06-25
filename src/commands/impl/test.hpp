@@ -3,10 +3,11 @@
 #include <iostream>
 
 #include "../commandmanager.hpp"
+#include "../../utils/logger.hpp"
 
 class TestCommand : public Command {
     void execute(char **args) override {
-        std::cout << "[+] Hello World ! " << std::endl;
+        log("From test command : Hello World !");
     }
 
     char *getName() override {

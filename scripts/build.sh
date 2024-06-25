@@ -11,3 +11,15 @@ mkdir build
 cd build
 cmake build ../
 cmake --build .
+
+if [ $? -ne 0 ]; then
+    echo "Something went wrong and the code could not compile properly."
+    cd ../scripts
+    exit 1
+fi
+
+cd ../build/
+
+./JavalessMC
+
+cd ../scripts

@@ -4,6 +4,7 @@
 #include "../events/impl/processCommandEvent.hpp"
 #include <vector>
 #include <iostream>
+#include "../utils/logger.hpp"
 
 class Command {
   public:
@@ -23,7 +24,7 @@ class CommandManager {
     }
 
     void addCommand(Command *instance) {
-        std::cout << "added new command " << instance->getName() << " to command registry" << std::endl;
+        log("added new command " + std::string(instance->getName()) + " to command registry");
         commandList.push_back(instance);
     }
 

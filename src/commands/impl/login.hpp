@@ -6,6 +6,8 @@
 #include <cstddef>
 #include <string>
 
+#include "../../config.hpp"
+
 class Login : public Command {
 public:
     void execute(char **args) override {
@@ -17,7 +19,16 @@ public:
         }
         char* username = args[0];
         char* password = args[1];
+
+        config.username = std::string(username);
+        config.password = std::string(password);
+
+#if DEBUG_MODE
+        log("Argument passed :");
         log("Test. username : " + std::string(username) + ", password : " + std::string(password));
+        log("Data saved to config struct :");
+        log("Test. username : " + std::string(config.username) + ", password : " + std::string(config.password));
+#endif
     }
 
     char *getName() override {

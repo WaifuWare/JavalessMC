@@ -1,3 +1,6 @@
+#include <spdlog/spdlog.h>
+#include <ostream>
+
 #include "events/impl/pluginLoadedEvent.hpp"
 #include "loader.hpp"
 
@@ -6,14 +9,14 @@
 #include "events/impl/processCommandEvent.hpp"
 
 #include "commands/commandmanager.hpp"
-#include "commands/impl/test.hpp"
+
+#if DEBUG_MODE
+    #include "commands/impl/test.hpp"
+#endif
 #include "commands/impl/login.hpp"
 
 #include "utils/logger.hpp"
-
-#include <ostream>
-
-#define DEBUG_MODE 0
+#include "config.hpp"
 
 /**
  * @brief main loop of the program
@@ -36,12 +39,20 @@ void onPluginLoad(Event *event) {
 }
 
 int main() {
+
+    spdlog::set_pattern("[%H:%M:%S] [%^%l%$] %v");
+
+    bool loaded = loadData();
+
     EventManager::getInstance().registerEventManager(onTick);
     EventManager::getInstance().registerEventManager(onPluginLoad);
 
     CommandManager::getInstance()->init();
-    CommandManager::getInstance()->addCommand(new TestCommand);
     CommandManager::getInstance()->addCommand(new Login);
+
+#if DEBUG_MODE
+    CommandManager::getInstance()->addCommand(new TestCommand);
+#endif
 
     initLoader();
 
@@ -56,10 +67,24 @@ int main() {
     // test command system with args
     EventManager::getInstance().fire(new ProcessCommandEvent("login", new char *[2] {"sbn", "1234"}));
 
+    // test save system
+    
+
+    config.autoconnect = true;
+    log("username : " + std::string(config.username) + ", password : " + std::string(config.password) + ", autoconnect : " + std::to_string(config.autoconnect));
+
+
+    log("Saving data and loading it again to see if it is saved / loaded properly");
+    saveData();
+    loadData();
+
+    log("Username: " + std::string(config.username) + " autoreconnect: " + boolToString(config.autoconnect));    
+
     // by this point we dont want the rest of the program to execute.
     // @todo : write proper unit testing
     return 0;   
 #else
+
     while (true) {
         EventManager::getInstance().fire(new UpdateEvent);
     }

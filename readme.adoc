@@ -14,6 +14,10 @@ depending on your OS, download either a .dll or .so of the plugin, and put it in
 
 If this folder does not exist, create it yourself. JavalessMC alone is useless, as it just create a player that do nothing.
 
+== Debugging
+
+in CMakeLists.txt, change IS_DEBUG to ON to run test and have additional debug information
+
 == Create plugins
 
 In the future, an api and an exemple will be published, with documentation. For now, please wait until we get to this part of developpement.
