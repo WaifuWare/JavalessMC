@@ -7,31 +7,31 @@
 #include <stdexcept>
 
 class MinecraftException final : public std::exception {
-  public:
-    explicit MinecraftException(const char *message) {
-        this->message = message;
-    }
+    public:
+        explicit MinecraftException(const char *message) {
+            this->message = message;
+        }
 
-    const char *what() {
-        return this->message;
-    }
+        const char *what() {
+            return this->message;
+        }
 
-  private:
-    const char *message;
+    private:
+        const char *message;
 };
 
 class SocketException final : public std::exception {
-  public:
-    explicit SocketException(const char *message) {
-        this->message = message;
-    }
+    public:
+        explicit SocketException(const char *message) {
+            this->message = message;
+        }
 
-    const char *what() {
-        return this->message;
-    }
+        const char *what() {
+            return this->message;
+        }
 
-  private:
-    const char *message;
+    private:
+        const char *message;
 };
 
 #endif //JAVALESSMC_EXCEPTIONS_HPP
