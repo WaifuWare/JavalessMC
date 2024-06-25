@@ -18,6 +18,8 @@
 #include "utils/logger.hpp"
 #include "config.hpp"
 
+#define boolToString(b) (b ? "true" : "false")
+
 /**
  * @brief main loop of the program
 */
