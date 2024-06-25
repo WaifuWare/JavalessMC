@@ -16,7 +16,7 @@ class EventManager {
             return instance;
         }
 
-        void registerEventManager(EventHandler handler) {
+        void registerEventListener(EventHandler handler) {
             handlers.push_back(handler);
         }
 

@@ -46,8 +46,8 @@ int main() {
 
     bool loaded = loadData();
 
-    EventManager::getInstance().registerEventManager(onTick);
-    EventManager::getInstance().registerEventManager(onPluginLoad);
+    EventManager::getInstance().registerEventListener(onTick);
+    EventManager::getInstance().registerEventListener(onPluginLoad);
 
     CommandManager::getInstance()->init();
     CommandManager::getInstance()->addCommand(new Login);

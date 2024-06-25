@@ -28,7 +28,7 @@ class CommandManager {
         }
 
         void init() {
-            EventManager::getInstance().registerEventManager(processCommand);
+            EventManager::getInstance().registerEventListener(processCommand);
         }
 
         static void processCommand(Event *event) {
