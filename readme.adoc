@@ -1,5 +1,7 @@
 = JavalessMC
 
+=== THIS PROJECT IS NOT ENDORSED, AFFILIATED OR OTHERWISE APPROVED BY MOJANG STUDIOS AND / OR MICROSOFT
+
 JavalessMC is a minecraft headless instance that work in C++. Its goal is to provide a fast and memory efficient framework to build Minecraft bots.
 
 *THIS TOOL IS A WORK IN PROGRESS AND MAY NOT WORK AS EXPECTED. PLEASE BE PATIENT UNTIL WE MAKE A WORKING SOLUTION !*
