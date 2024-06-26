@@ -23,7 +23,7 @@ public:
         config.username = std::string(username);
         config.password = std::string(password);
 
-#if DEBUG_MODE
+#if 0
         log("Argument passed :");
         log("Test. username : " + std::string(username) + ", password : " + std::string(password));
         log("Data saved to config struct :");

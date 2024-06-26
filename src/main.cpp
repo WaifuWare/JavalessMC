@@ -10,8 +10,8 @@
 
 #include "commands/commandmanager.hpp"
 
-#if DEBUG_MODE
-    #include "commands/impl/test.hpp"
+#if DEBUG_MODE && RUN_TEST
+    #include "test.hpp"
 #endif
 #include "commands/impl/login.hpp"
 
@@ -58,32 +58,8 @@ int main() {
 
     initLoader();
 
-#if DEBUG_MODE
-    // test logger
-    log("test");
-    logError("test error");
-
-    // test command system without args
-    EventManager::getInstance().fire(new ProcessCommandEvent("test", new char *[0]));
-
-    // test command system with args
-    EventManager::getInstance().fire(new ProcessCommandEvent("login", new char *[2] {"sbn", "1234"}));
-
-    // test save system
-    
-
-    config.autoconnect = true;
-    log("username : " + std::string(config.username) + ", password : " + std::string(config.password) + ", autoconnect : " + std::to_string(config.autoconnect));
-
-
-    log("Saving data and loading it again to see if it is saved / loaded properly");
-    saveData();
-    loadData();
-
-    log("Username: " + std::string(config.username) + " autoreconnect: " + boolToString(config.autoconnect));    
-
-    // by this point we dont want the rest of the program to execute.
-    // @todo : write proper unit testing
+#if DEBUG_MODE && RUN_TEST
+    test();
     return 0;   
 #else
 

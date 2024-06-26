@@ -15,6 +15,8 @@ struct Config
 
     std::string ip;
     bool autoconnect;
+
+    int maxfps = 60;
 } config;
 
 bool loadData() {
@@ -46,5 +48,4 @@ bool saveData() {
     f.close();
 
     return 1;
-
 }
