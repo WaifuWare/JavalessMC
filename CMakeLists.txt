@@ -13,7 +13,7 @@ include_directories(${CMAKE_SOURCE_DIR}/cryptography)
 
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 
-add_subdirectory(thirdparty/spdlog)
+add_subdirectory(thirdparty/spdlogger)
 
 add_executable(JavalessMC ${SOURCES} ${ASN1C_SOURCES})
 
