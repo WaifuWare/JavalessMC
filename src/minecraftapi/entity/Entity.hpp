@@ -7,6 +7,8 @@
 
 #include "../content/BaseItem.hpp"
 
+#include "../../events/eventmanager.hpp"
+
 #define INVENTORY_SIZE 36
 
 #define HELMET_SLOT 37
@@ -54,6 +56,8 @@ struct PlayerEntityData {
 
     EntityData data;
 
+    Inventory playerInventory;
+
     struct PlayerGameProfile {
         std::string uuid;
         std::string accountName;
@@ -65,3 +69,27 @@ struct PlayerEntityData {
     } publicSession;
 };
 
+bool wasPlayerCreatedEventRegistered = false;
+
+/**
+ * This is a special case;
+ * 
+ * creating this class in its own event.hpp file would create a circular dependency between it and the entity.hpp file.
+*/
+class PlayerCreatedEvent : public Event {
+    public:
+        PlayerCreatedEvent(PlayerEntityData *data) : data(data) {}
+
+        PlayerEntityData *getPlayerData() { return data; }
+
+    private:
+        PlayerEntityData *data;
+};
+
+void createPlayer(PlayerEntityData* data, const char rawdata[]) {
+
+    
+
+    if(data != nullptr)
+        EventManager::getInstance().fire(new PlayerCreatedEvent(data));
+}

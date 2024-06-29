@@ -87,8 +87,6 @@ void test() {
 
     testVector();
 
-
-
     logTest("every test passed with success in " + std::to_string(sw.elapsed().count() * 1000.0) + " ms");
 }
 

@@ -11,6 +11,7 @@
 // each of those objects can, in theory, hold an infinite amount of tags in them. For all intents and purporses,
 // we'll also assume an NBT tag will never contain more than a total amount of 2048 unique entries
 #define MAX_ROOT_TAG 16
+#define MAX_TAG_PER_OBJECT 128²
 
 enum TAGTYPE {
     TAG_End = 0,
